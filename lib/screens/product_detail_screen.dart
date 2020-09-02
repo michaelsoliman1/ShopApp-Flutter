@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/add_item.dart';
+
 import '../providers/products.dart';
+import '../providers/cart.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   // final String title;
@@ -15,9 +18,17 @@ class ProductDetailScreen extends StatelessWidget {
     final productId = ModalRoute.of(context).settings.arguments as String;
     final product =
         Provider.of<Products>(context, listen: false).findById(productId);
+    final cart = Provider.of<Cart>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title),
+        actions: [
+          AddItemWidget(
+            icon: Icon(Icons.add),
+            cart: cart,
+            product: product,
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
